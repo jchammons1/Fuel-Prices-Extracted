@@ -57,7 +57,7 @@ def extract_month_year(text: str):
     )
     m = MONTH_YEAR_RE.search(text)
     if not m:
-        raise ValueError("Month/Year not found in PDF")
+        raise ValueError("Month/Year not found in Word Document")
     parts = m.group(0).split()
     return parts[0].title(), int(parts[1])
 
@@ -111,6 +111,7 @@ def process_fuel_prices(file_path: str):
         nfuel_value = try_parse_price(fuel_value)
         fuel_dic.update({nrow_label:nfuel_value})
 
+
     # Clean up the Fuel dictionary "fuel_dic" and match the SQL table
     sql_table_for_import = {
         "Month": month,
@@ -125,7 +126,7 @@ def process_fuel_prices(file_path: str):
         "RS2C_CRS2": str(fuel_dic.get("graders2c(crs2)")) if fuel_dic.get("graders2c(crs2)") is not None else None,
         "CRS2P": str(fuel_dic.get("gradecrs2p")) if fuel_dic.get("gradecrs2p") is not None else None,
         "EA1_ERP1_AEP": str(fuel_dic.get("gradeea1,epr1,&aep")) if fuel_dic.get("gradeea1,epr1,&aep") is not None else None,
-        "CSS1_Undiluted": str(fuel_dic.get("gradecss1&lh(undiluted)")) if fuel_dic.get("gradecss1&lh(undiluted)") is not None else None,
+        "CSS1_Undiluted": str(fuel_dic.get("gradecss1&1h(undiluted)")) if fuel_dic.get("gradecss1&1h(undiluted)") is not None else None,
         "CSS1_1H":str(fuel_dic.get("gradecss1&1h")) if fuel_dic.get("gradecss1&1h") is not None else None
     }
 
